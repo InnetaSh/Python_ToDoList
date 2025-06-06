@@ -38,7 +38,8 @@ def list_notes(notes):
         print(f"\nЗаметка #{idx}")
         print(f"  Title: {note['title']}")
         print(f"  Text: {note['text']}")
-        print(f"  SaveAt: {note['SaveAt']}")
+        print(f"  Status: {note['status']}")
+        print(f"  Data: {note['data']}")
         idx += 1
         print("-----------------------------------------")
 
@@ -47,7 +48,17 @@ def info_contact():
     note = {}
     note['title'] = input("Введите title: ")
     note['text'] = input("Введите text: ")
-    note['SaveAt'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    while True:
+        status_input = input("Введите статус (1 - сделано, 2 - не сделано): ")
+        if status_input == '1':
+            note['status'] = 'сделано'
+            break
+        elif status_input == '2':
+            note['status'] = 'не сделано'
+            break
+        else:
+            print("Некорректный ввод. Пожалуйста, выберите 1 или 2.")
+    note['data'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     return note
 
@@ -65,7 +76,8 @@ def subMenu(note):
         print("Выберите данные заметки для изменения:")
         print("1. Изменить title")
         print("2. Изменить text")
-        print("3. В меню")
+        print("3. Изменить status")
+        print("4. В меню")
         choice = input("Выберите действие: ")
         match choice:
             case  "1":
@@ -74,7 +86,18 @@ def subMenu(note):
             case  "2":
                 text = input("text: ")
                 note['text'] = text
-            case "3":
+            case  "3":
+                while True:
+                    status_input = input("Введите статус (1 - сделано, 2 - не сделано): ")
+                    if status_input == '1':
+                        note['status'] = 'сделано'
+                        break
+                    elif status_input == '2':
+                        note['status'] = 'не сделано'
+                        break
+                    else:
+                        print("Некорректный ввод. Пожалуйста, выберите 1 или 2.")
+            case "4":
                 break
             case _:
                 print("Неверный выбор. Попробуйте снова.")
@@ -88,9 +111,9 @@ def  update_note(notes):
     idx = int(input("\nВведите номер заметки для изменения: ")) - 1
     if 0 <= idx < len(notes):
         subMenu(notes[idx])
-        print(" Контакт обновлён.")
+        print(" заметки обновлёны.")
     else:
-        print(" Неверный номер контакта.")
+        print(" Неверный номер заметки.")
 
 
 
